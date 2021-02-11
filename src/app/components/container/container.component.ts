@@ -1,22 +1,16 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core";
-import {FixedSizeVirtualScrollStrategy, VIRTUAL_SCROLL_STRATEGY} from '@angular/cdk/scrolling';
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import { VIRTUAL_SCROLL_STRATEGY } from "@angular/cdk/scrolling";
+import { ContextViewerStrategy } from "../../strategies/context-viewer.strategy";
 
-export class CustomVirtualScrollStrategy extends FixedSizeVirtualScrollStrategy {
-  constructor() {
-    super(50, 250, 500);
-  }
-}
 @Component({
   selector: "container",
   templateUrl: "./container.component.html",
-   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{provide: VIRTUAL_SCROLL_STRATEGY, useClass: CustomVirtualScrollStrategy}],
-  styles: [
-    `
-      h1 {
-        font-family: Lato;
-      }
-    `
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    {
+      provide: VIRTUAL_SCROLL_STRATEGY,
+      useClass: ContextViewerStrategy
+    }
   ]
 })
 export class ContainerComponent implements OnInit {
