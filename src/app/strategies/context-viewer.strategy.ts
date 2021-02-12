@@ -78,5 +78,7 @@ export class ContextViewerStrategy implements VirtualScrollStrategy {
       dataLength
     );
     this.viewport.setRenderedRange(newRange);
+
+    this.index$.next(0);
   }
 }
