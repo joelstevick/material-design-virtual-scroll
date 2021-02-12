@@ -5,6 +5,7 @@ import { ContextViewerStrategy } from "../../strategies/context-viewer.strategy"
 @Component({
   selector: "container",
   templateUrl: "./container.component.html",
+  styleUrls: ["./container.component.css"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {

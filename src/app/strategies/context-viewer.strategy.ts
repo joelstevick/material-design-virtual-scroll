@@ -1,30 +1,53 @@
+import { I } from "@angular/cdk/keycodes";
 import {
   CdkVirtualScrollViewport,
   VirtualScrollStrategy
 } from "@angular/cdk/scrolling";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
+import { distinctUntilChanged } from "rxjs/operators";
 
+function getViewPortHeight() {
+  return 200;
+}
+function getItemHeight() {
+  return 50;
+}
 export class ContextViewerStrategy implements VirtualScrollStrategy {
-  scrolledIndexChange: Observable<number>;
-  attach(viewport: CdkVirtualScrollViewport): void {
-    throw new Error("Method not implemented.");
+  private index$ = new Subject<number>();
+
+  scrolledIndexChange = this.index$.pipe(distinctUntilChanged());
+
+  private viewport: CdkVirtualScrollViewport | null = null;
+
+  attach(viewport: CdkVirtualScrollViewport) {
+    this.viewport = viewport;
+    this.viewport.setTotalContentSize(getViewPortHeight());
+    console.log("attach");
   }
-  detach(): void {
-    throw new Error("Method not implemented.");
+
+  detach() {
+    this.index$.complete();
+    this.viewport = null;
   }
-  onContentScrolled(): void {
-    throw new Error("Method not implemented.");
+
+  onContentScrolled() {
+    if (this.viewport) {
+    }
   }
+
+  scrollToIndex(index: number, behavior: ScrollBehavior): void {
+    if (this.viewport) {
+      this.viewport.scrollToOffset(0, behavior);
+    }
+  }
+  // not implemented
   onDataLengthChanged(): void {
-    throw new Error("Method not implemented.");
+    console.log("onDataLengthChanged");
   }
   onContentRendered(): void {
-    throw new Error("Method not implemented.");
+    console.log("onContentRendered");
   }
   onRenderedOffsetChanged(): void {
-    throw new Error("Method not implemented.");
-  }
-  scrollToIndex(index: number, behavior: ScrollBehavior): void {
-    throw new Error("Method not implemented.");
+    console.log("onRenderedOffsetChanged");
   }
 }
