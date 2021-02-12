@@ -34,9 +34,9 @@ export class ContextViewerStrategy implements VirtualScrollStrategy {
   }
 
   onContentScrolled() {
-    console.log("onContentScrolled");
-
+    console.log("onContentScrolled", !!this.viewport);
     if (this.viewport) {
+      this.updateRenderedRange();
     }
   }
 
@@ -68,7 +68,7 @@ export class ContextViewerStrategy implements VirtualScrollStrategy {
       start: start,
       end: start + viewportSize / getItemHeight() + 1
     };
-
+    
     console.log(
       "updateRenderedRange",
       viewportSize,

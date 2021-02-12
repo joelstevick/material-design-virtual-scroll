@@ -18,11 +18,24 @@ export class ContainerComponent implements OnInit {
   index: number;
   items: any[] = [];
 
-  ngOnInit() {
-    for (let i = 0; i < 100; i++) {
-      this.items.push({
-        i
-      });
+  ngOnInit() {}
+
+  fetchMoreitems(newIndex: number) {
+    const PAGE_SIZE = 10;
+
+    if (newIndex > this.items.length - PAGE_SIZE) {
+      const amountToAdd = Math.max(PAGE_SIZE, newIndex - this.items.length);
+
+      for (let i = 0; i < amountToAdd; i++) {
+        this.items.push({
+          i
+        });
+      }
     }
+  }
+
+  scrolledIndexChange(index) {
+    this.fetchMoreitems(index);
+    this.index = index;
   }
 }
