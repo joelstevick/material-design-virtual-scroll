@@ -6,7 +6,7 @@ import {
 import { Observable, Subject } from "rxjs";
 import { distinctUntilChanged } from "rxjs/operators";
 
-function getViewPortHeight() {
+function getContentHeight() {
   return 200;
 }
 function getItemHeight() {
@@ -20,22 +20,29 @@ export class ContextViewerStrategy implements VirtualScrollStrategy {
   private viewport: CdkVirtualScrollViewport | null = null;
 
   attach(viewport: CdkVirtualScrollViewport) {
-    this.viewport = viewport;
-    this.viewport.setTotalContentSize(getViewPortHeight());
     console.log("attach");
+    this.viewport = viewport;
+    this.viewport.setTotalContentSize(getContentHeight());
+
+    this.updateRenderedRange();
   }
 
   detach() {
     this.index$.complete();
     this.viewport = null;
+    console.log("detach");
   }
 
   onContentScrolled() {
+    console.log("onContentScrolled");
+
     if (this.viewport) {
     }
   }
 
   scrollToIndex(index: number, behavior: ScrollBehavior): void {
+    console.log("scrollToIndex");
+
     if (this.viewport) {
       this.viewport.scrollToOffset(0, behavior);
     }
@@ -49,5 +56,23 @@ export class ContextViewerStrategy implements VirtualScrollStrategy {
   }
   onRenderedOffsetChanged(): void {
     console.log("onRenderedOffsetChanged");
+  }
+
+  // custom logic
+  private updateRenderedRange() {
+    const viewportSize = this.viewport.getViewportSize();
+    const offset = this.viewport.measureScrollOffset();
+    const { start, end } = this.viewport.getRenderedRange();
+    const dataLength = this.viewport.getDataLength();
+    const newRange = { start, end };
+
+    console.log(
+      "updateRenderedRange",
+      viewportSize,
+      offset,
+      start,
+      end,
+      dataLength
+    );
   }
 }
