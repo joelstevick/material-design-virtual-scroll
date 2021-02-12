@@ -64,7 +64,7 @@ export class ContextViewerStrategy implements VirtualScrollStrategy {
     const offset = this.viewport.measureScrollOffset();
     const { start, end } = this.viewport.getRenderedRange();
     const dataLength = this.viewport.getDataLength();
-    const newRange = { start, end };
+    const newRange = { start, end: start + 1 };
 
     console.log(
       "updateRenderedRange",
@@ -74,5 +74,6 @@ export class ContextViewerStrategy implements VirtualScrollStrategy {
       end,
       dataLength
     );
+    this.viewport.setRenderedRange(newRange);
   }
 }

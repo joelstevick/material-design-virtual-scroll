@@ -2,3 +2,8 @@ cdk-virtual-scroll-viewport {
   border: 1px solid #999;
   height: 300px;
 }
+
+.item {
+  height: 50px;
+  border: 1px dashed green;
+}
