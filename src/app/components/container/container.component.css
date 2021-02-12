@@ -5,5 +5,13 @@ cdk-virtual-scroll-viewport {
 
 .item {
   height: 50px;
+  line-height: 50px;
   border: 1px dashed green;
+  text-align: center;
+}
+
+.item span {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
 }
