@@ -6,7 +6,7 @@ import { Observable, Subject } from "rxjs";
 import { distinctUntilChanged } from "rxjs/operators";
 
 function getContentHeight() {
-  return 110;
+  return 200;
 }
 function getItemHeight() {
   return 10;
@@ -25,8 +25,7 @@ export class ContextViewerStrategy implements VirtualScrollStrategy {
     this.viewport = viewport;
     this.viewport.setTotalContentSize(getContentHeight());
     this.viewport.setRenderedRange({ start: 30, end: 40 });
-    this.viewport.setRenderedContentOffset(-40);
-    this.index$.next(5);
+    this.viewport.setRenderedContentOffset(0);
   }
 
   detach() {
