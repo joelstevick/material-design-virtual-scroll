@@ -60,21 +60,14 @@ export class ContextViewerStrategy implements VirtualScrollStrategy {
     const offsetIndex = this.viewport.measureScrollOffset();
     const { start, end } = this.viewport.getRenderedRange();
     const dataLength = this.viewport.getDataLength();
-    const newIndex = offsetIndex;
     const newRange = {
-      start: newIndex,
-      end: newIndex + 10
+      start: offsetIndex,
+      end: offsetIndex + 10
     };
 
-    console.log(
-      offsetIndex,
-      newIndex,
-      this.viewport.getRenderedRange(),
-      newRange
-    );
-    this.index$.next(newIndex);
+    this.index$.next(offsetIndex);
     this.viewport.setRenderedRange(newRange);
 
-    this.viewport.setRenderedContentOffset(newIndex);
+    this.viewport.setRenderedContentOffset(offsetIndex);
   }
 }
