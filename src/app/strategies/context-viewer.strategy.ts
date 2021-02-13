@@ -6,10 +6,10 @@ import { Observable, Subject } from "rxjs";
 import { distinctUntilChanged } from "rxjs/operators";
 
 function getContentHeight() {
-  return 5000;
+  return 300;
 }
 function getItemHeight() {
-  return 50;
+  return 20;
 }
 export class ContextViewerStrategy implements VirtualScrollStrategy {
   private index$ = new Subject<number>();
