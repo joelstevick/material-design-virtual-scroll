@@ -4,11 +4,13 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  Inject,
   OnInit,
   ViewChild
 } from "@angular/core";
 import { VIRTUAL_SCROLL_STRATEGY } from "@angular/cdk/scrolling";
 import { ContextViewerStrategy } from "../../strategies/context-viewer.strategy";
+import { DOCUMENT } from "@angular/common";
 
 const ARRAY_LENGTH = 100;
 
@@ -28,9 +30,10 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
   index: number;
   items: any[] = Array(ARRAY_LENGTH).fill(null);
 
-  @ViewChild("container") containerRef: ElementRef;
-
-  constructor(private changeDetectorRef: ChangeDetectorRef) {}
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    @Inject(DOCUMENT) private document: any
+  ) {}
 
   ngAfterViewChecked(): void {
     this.scrollToBottom();
@@ -40,12 +43,14 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
     for (let i = 0; i < this.items.length; i++) {
       this.items[i] = i;
     }
+
+    setTimeout(() => {
+      this.scrollToBottom();
+    }, 500);
   }
 
   scrollToBottom() {
-    if (this.containerRef.nativeElement) {
-      this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
-    }
+    this.document.getElementById("bottom").scrollIntoView();
   }
   fetchMoreitems(newIndex: number) {}
 

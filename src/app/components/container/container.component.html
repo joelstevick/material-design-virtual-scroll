@@ -2,9 +2,9 @@
 {{ index }}
 <cdk-virtual-scroll-viewport
   (scrolledIndexChange)="scrolledIndexChange($event)"
-  #container
 >
   <div *cdkVirtualFor="let item of items; index as index" class="item">
     <span>{{item | json}}</span>
   </div>
+  <div id="bottom"></div>
 </cdk-virtual-scroll-viewport>

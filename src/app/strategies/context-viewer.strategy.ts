@@ -24,7 +24,7 @@ export class ContextViewerStrategy implements VirtualScrollStrategy {
   attach(viewport: CdkVirtualScrollViewport) {
     this.viewport = viewport;
     this.viewport.setTotalContentSize(getContentHeight());
-    this.viewport.setRenderedRange({ start: 30, end: 40 });
+    this.viewport.setRenderedRange({ start: 0, end: 50 });
     this.viewport.setRenderedContentOffset(0);
   }
 
