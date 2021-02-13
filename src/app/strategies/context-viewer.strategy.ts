@@ -6,7 +6,7 @@ import { Observable, Subject } from "rxjs";
 import { distinctUntilChanged } from "rxjs/operators";
 
 function getContentHeight() {
-  return 10;
+  return 110;
 }
 function getItemHeight() {
   return 10;
@@ -24,12 +24,9 @@ export class ContextViewerStrategy implements VirtualScrollStrategy {
   attach(viewport: CdkVirtualScrollViewport) {
     this.viewport = viewport;
     this.viewport.setTotalContentSize(getContentHeight());
-
-    setTimeout(() => {
-      this.viewport.setTotalContentSize(getContentHeight() + 100);
-    });
-
-    this.updateRenderedRange();
+    this.viewport.setRenderedRange({ start: 30, end: 40 });
+    this.viewport.setRenderedContentOffset(-40);
+    this.index$.next(5);
   }
 
   detach() {
@@ -39,7 +36,6 @@ export class ContextViewerStrategy implements VirtualScrollStrategy {
 
   onContentScrolled() {
     if (this.viewport) {
-      this.updateRenderedRange();
     }
   }
 
@@ -62,19 +58,4 @@ export class ContextViewerStrategy implements VirtualScrollStrategy {
   }
 
   // custom logic
-  private updateRenderedRange() {
-    const viewportSize = this.viewport.getViewportSize();
-    const offsetIndex = this.viewport.measureScrollOffset();
-    const { start, end } = this.viewport.getRenderedRange();
-    const dataLength = this.viewport.getDataLength();
-    const newRange = {
-      start: offsetIndex,
-      end: offsetIndex + 10
-    };
-
-    this.index$.next(offsetIndex);
-    this.viewport.setRenderedRange(newRange);
-
-    this.viewport.setRenderedContentOffset(offsetIndex);
-  }
 }
