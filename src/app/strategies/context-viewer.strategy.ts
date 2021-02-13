@@ -6,7 +6,7 @@ import { Observable, Subject } from "rxjs";
 import { distinctUntilChanged } from "rxjs/operators";
 
 function getContentHeight() {
-  return 300;
+  return 10000;
 }
 function getItemHeight() {
   return 20;
