@@ -27,7 +27,11 @@ export class ContainerComponent implements OnInit {
 
   constructor(private changeDetectorRef: ChangeDetectorRef) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    for (let i = 0; i < this.items.length; i++) {
+      this.items[i] = i;
+    }
+  }
 
   fetchMoreitems(newIndex: number) {
     const PAGE_SIZE = 10;
