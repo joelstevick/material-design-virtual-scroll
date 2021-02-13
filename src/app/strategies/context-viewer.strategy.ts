@@ -75,8 +75,8 @@ export class ContextViewerStrategy implements VirtualScrollStrategy {
     );
     this.index$.next(newIndex);
 
-    return;
     this.viewport.setRenderedRange(newRange);
+    return;
     this.viewport.setRenderedContentOffset(
       (newRange.start - start) * getItemHeight()
     );

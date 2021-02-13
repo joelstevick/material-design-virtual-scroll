@@ -4,9 +4,10 @@ cdk-virtual-scroll-viewport {
 }
 
 .item {
-  height: 20px;
-  line-height: 50px;
+  height: 10px;
+  line-height: 20px;
   text-align: center;
+  font-size: 8pt;
 }
 
 .item span {
