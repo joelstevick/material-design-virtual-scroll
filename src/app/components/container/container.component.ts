@@ -7,7 +7,7 @@ import {
 import { VIRTUAL_SCROLL_STRATEGY } from "@angular/cdk/scrolling";
 import { ContextViewerStrategy } from "../../strategies/context-viewer.strategy";
 
-const ARRAY_LENGTH = 10 * 1000;
+const ARRAY_LENGTH = 10;
 
 @Component({
   selector: "container",
