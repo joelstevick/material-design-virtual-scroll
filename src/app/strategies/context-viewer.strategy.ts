@@ -64,15 +64,17 @@ export class ContextViewerStrategy implements VirtualScrollStrategy {
     const newRange = {
       start: start + newIndex,
       end: start + viewportSize / getItemHeight() + 1
-    };
+    }; 
 
     console.log(
       "updateRenderedRange",
       viewportSize,
+      this.viewport.getRenderedRange(),
       offset,
       newRange,
       newIndex
     );
+    return;
     this.viewport.setRenderedRange(newRange);
     this.viewport.setRenderedContentOffset(newRange.start * getItemHeight());
 
