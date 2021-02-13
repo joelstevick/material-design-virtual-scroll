@@ -1,4 +1,3 @@
-import { I } from "@angular/cdk/keycodes";
 import {
   CdkVirtualScrollViewport,
   VirtualScrollStrategy
@@ -7,7 +6,7 @@ import { Observable, Subject } from "rxjs";
 import { distinctUntilChanged } from "rxjs/operators";
 
 function getContentHeight() {
-  return 200;
+  return 5000;
 }
 function getItemHeight() {
   return 50;
@@ -61,12 +60,12 @@ export class ContextViewerStrategy implements VirtualScrollStrategy {
     const offset = this.viewport.measureScrollOffset();
     const { start, end } = this.viewport.getRenderedRange();
     const dataLength = this.viewport.getDataLength();
+    const newIndex = Math.round(offset / getItemHeight());
     const newRange = {
-      start: start,
+      start: start + newIndex,
       end: start + viewportSize / getItemHeight() + 1
     };
 
-    const newIndex = Math.round(offset / getItemHeight());
     console.log(
       "updateRenderedRange",
       viewportSize,
