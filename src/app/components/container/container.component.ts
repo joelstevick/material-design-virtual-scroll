@@ -33,9 +33,7 @@ export class ContainerComponent implements OnInit {
     }
   }
 
-  fetchMoreitems(newIndex: number) {
-    const PAGE_SIZE = 10;
-  }
+  fetchMoreitems(newIndex: number) {}
 
   scrolledIndexChange(index) {
     this.fetchMoreitems(index);

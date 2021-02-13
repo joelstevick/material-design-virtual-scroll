@@ -11,6 +11,9 @@ function getContentHeight() {
 function getItemHeight() {
   return 10;
 }
+
+export const PAGE_SIZE = 10;
+
 export class ContextViewerStrategy implements VirtualScrollStrategy {
   private index$ = new Subject<number>();
 
