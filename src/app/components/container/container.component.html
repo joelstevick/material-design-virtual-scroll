@@ -1,7 +1,7 @@
 <h1>Virtual Scroll Data</h1>
-{{ index }}
+{{ index }}, {{items.length}}
 <cdk-virtual-scroll-viewport (scrolledIndexChange)="scrolledIndexChange($event)">
-	<div *cdkVirtualFor="let item of items" class="item">
+	<div *cdkVirtualFor="let item of items; index as index" class="item">
 		<span>{{item | json}}</span>
 	</div>
 </cdk-virtual-scroll-viewport>

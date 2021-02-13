@@ -1,6 +1,13 @@
-import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit
+} from "@angular/core";
 import { VIRTUAL_SCROLL_STRATEGY } from "@angular/cdk/scrolling";
 import { ContextViewerStrategy } from "../../strategies/context-viewer.strategy";
+
+const ARRAY_LENGTH = 10 * 1000;
 
 @Component({
   selector: "container",
@@ -16,22 +23,14 @@ import { ContextViewerStrategy } from "../../strategies/context-viewer.strategy"
 })
 export class ContainerComponent implements OnInit {
   index: number;
-  items: any[] = [];
+  items: any[] = Array(ARRAY_LENGTH).fill(null);
+
+  constructor(private changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit() {}
 
   fetchMoreitems(newIndex: number) {
     const PAGE_SIZE = 10;
-
-    if (newIndex > this.items.length - PAGE_SIZE) {
-      const amountToAdd = Math.max(PAGE_SIZE, newIndex - this.items.length);
-
-      for (let i = 0; i < amountToAdd; i++) {
-        this.items.push({
-          i
-        });
-      }
-    }
   }
 
   scrolledIndexChange(index) {
