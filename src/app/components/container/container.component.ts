@@ -46,13 +46,27 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
 
     let count = -1;
     this.scrollToBottom();
-    const handle = setInterval(() => {
+    // first and to the start and then the end
+    let handle = setInterval(() => {
       this.items = [count--, ...this.items];
 
       this.changeDetectorRef.detectChanges();
 
       if (count < -10) {
         clearInterval(handle);
+
+        count = 1000;
+
+        // add to the end to simulate new messages
+        handle = setInterval(() => {
+          this.items = [...this.items, count++];
+
+          this.changeDetectorRef.detectChanges();
+
+          if (count > 1010) {
+            clearInterval(handle);
+          }
+        }, 1000);
       }
     }, 100);
   }
