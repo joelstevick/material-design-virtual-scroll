@@ -37,9 +37,7 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
     @Inject(DOCUMENT) private document: any
   ) {}
 
-  ngAfterViewChecked(): void {
-    this.scrollToBottom();
-  }
+  ngAfterViewChecked(): void {}
 
   ngOnInit() {
     for (let i = 0; i < this.items.length; i++) {
@@ -56,8 +54,10 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
     let observer = new IntersectionObserver(handleIntersect, {});
     observer.observe(top);
 
-    let count = -1;
     this.scrollToBottom();
+    this.changeDetectorRef.detectChanges();
+
+    let count = -1;
     // first and to the start and then the end
     let handle = setInterval(() => {
       this.items = [count--, ...this.items];
@@ -76,9 +76,6 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
           this.changeDetectorRef.detectChanges();
           if (count > 1003) {
             clearInterval(handle);
-            setTimeout(() => {
-              this.scrollToTop();
-            }, 500);
           }
         }, 1000);
       }
