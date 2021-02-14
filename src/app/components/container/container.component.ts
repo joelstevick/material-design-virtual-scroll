@@ -62,17 +62,25 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
           this.items = [...this.items, count++];
 
           this.changeDetectorRef.detectChanges();
-
-          if (count > 1010) {
+          if (count > 1003) {
             clearInterval(handle);
+            setTimeout(() => {
+              this.scrollToTop();
+            }, 500);
           }
         }, 1000);
       }
     }, 100);
   }
 
+  scrollto(id) {
+    this.document.getElementById(id).scrollIntoView();
+  }
+  scrollToTop() {
+    this.scrollto("top");
+  }
   scrollToBottom() {
-    this.document.getElementById("bottom").scrollIntoView();
+    this.scrollto("bottom");
   }
   fetchMoreitems(newIndex: number) {}
 
