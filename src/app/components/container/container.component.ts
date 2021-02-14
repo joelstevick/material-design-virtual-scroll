@@ -12,7 +12,9 @@ import { VIRTUAL_SCROLL_STRATEGY } from "@angular/cdk/scrolling";
 import { ContextViewerStrategy } from "../../strategies/context-viewer.strategy";
 import { DOCUMENT } from "@angular/common";
 
-const ARRAY_LENGTH = 100;
+const ARRAY_LENGTH = 20;
+
+let moreIndex = -1;
 
 @Component({
   selector: "container",
@@ -29,6 +31,8 @@ const ARRAY_LENGTH = 100;
 export class ContainerComponent implements OnInit, AfterViewChecked {
   index: number;
   items: any[] = Array(ARRAY_LENGTH).fill(null);
+
+  initialized = false;
 
   @ViewChild("top") topRef: ElementRef;
 
@@ -48,12 +52,39 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
 
     const handleIntersect = (entries, observer) => {
       entries.forEach(e => {
-        console.log("intersecting", e.isIntersecting);
+        if (e.isIntersecting) {
+          console.log("interesecting", e.isIntersecting);
+          this.fetchMore();
+        }
       });
     };
     let observer = new IntersectionObserver(handleIntersect, {});
     observer.observe(top);
 
+    // scroll to bottom
+    setTimeout(() => {
+      this.scrollToBottom();
+      this.changeDetectorRef.detectChanges();
+      setTimeout(() => {
+        console.log("initialzed");
+        this.initialized = true;
+      });
+    });
+
+    // this.testDynamicData();
+  }
+
+  fetchMore() {
+    if (!this.initialized) {
+      return;
+    }
+    for (let i = 0; i < 10; i++) {
+      this.items = [moreIndex--, ...this.items];
+    }
+
+    this.changeDetectorRef.detectChanges();
+  }
+  testDynamicData() {
     let count = -1;
     // first and to the start and then the end
     let handle = setInterval(() => {
@@ -81,7 +112,6 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
       }
     }, 100);
   }
-
   scrollto(id) {
     this.document.getElementById(id).scrollIntoView();
   }
@@ -89,6 +119,7 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
     this.scrollto("top");
   }
   scrollToBottom() {
+    console.log("scrollToBottom");
     this.scrollto("bottom");
   }
   fetchMoreitems(newIndex: number) {}
