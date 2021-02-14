@@ -47,7 +47,14 @@ export class ContextViewerStrategy implements VirtualScrollStrategy {
   }
   // not implemented
   onDataLengthChanged(): void {
-    console.log("onDataLengthChanged");
+    console.log("onDataLengthChanged", !!this.viewport);
+    if (this.viewport) {
+      this.viewport.setRenderedRange({
+        start: 0,
+        end: this.viewport.getDataLength()
+      });
+      this.viewport.setRenderedContentOffset(0);
+    }
   }
   onContentRendered(): void {
     console.log("onContentRendered");

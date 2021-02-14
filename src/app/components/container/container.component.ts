@@ -47,12 +47,12 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
     setTimeout(() => {
       this.scrollToBottom();
       setTimeout(() => {
-        this.items = ["xxx", ...this.items];
+        this.items = ["xxx", "yyy", "zzz", ...this.items];
 
         this.changeDetectorRef.detectChanges();
         console.log(this.items);
       });
-    }, 500);
+    }, 2000);
   }
 
   scrollToBottom() {
