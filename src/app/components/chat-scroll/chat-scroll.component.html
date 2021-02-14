@@ -1,0 +1,10 @@
+<h1>Virtual Scroll Data</h1>
+<cdk-virtual-scroll-viewport>
+	<div id="top" #top></div>
+	<ng-container *cdkVirtualFor="let item of items; index as index">
+		<div class="item">
+			<span>{{item | json}}</span>
+		</div>
+	</ng-container>
+	<div id="bottom"></div>
+</cdk-virtual-scroll-viewport>

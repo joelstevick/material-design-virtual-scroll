@@ -20,6 +20,7 @@ import { ChatScrollStrategy } from "../../strategies/chat-scroll.strategy";
   ]
 })
 export class ChatScrollComponent implements OnInit, AfterViewChecked {
+  items: any[] = [];
   ngAfterViewChecked(): void {}
   ngOnInit(): void {}
 }
