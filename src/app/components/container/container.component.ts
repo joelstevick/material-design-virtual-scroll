@@ -49,7 +49,9 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
     const top = this.document.querySelector("#top");
 
     const handleIntersect = (entries, observer) => {
-      console.log(entries, observer);
+      entries.forEach(e => {
+        console.log("intersecting", e.isIntersecting);
+      });
     };
     let observer = new IntersectionObserver(handleIntersect, {});
     observer.observe(top);
