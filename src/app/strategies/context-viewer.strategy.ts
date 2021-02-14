@@ -24,7 +24,6 @@ export class ContextViewerStrategy implements VirtualScrollStrategy {
   attach(viewport: CdkVirtualScrollViewport) {
     this.viewport = viewport;
     this.viewport.setTotalContentSize(getContentHeight());
-    this.viewport.setRenderedRange({ start: 0, end: 10 });
     this.viewport.setRenderedContentOffset(0);
   }
 
@@ -52,8 +51,8 @@ export class ContextViewerStrategy implements VirtualScrollStrategy {
     console.log("onDataLengthChanged", !!this.viewport);
     if (this.viewport) {
       this.viewport.setRenderedRange({
-        start: 0,
-        end: 20
+        start: this.viewport.getDataLength() - 10,
+        end: this.viewport.getDataLength()
       });
       this.viewport.setRenderedContentOffset(0);
     }

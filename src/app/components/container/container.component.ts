@@ -30,7 +30,7 @@ let moreIndex = -1;
 })
 export class ContainerComponent implements OnInit, AfterViewChecked {
   index: number;
-  items: any[] = Array(ARRAY_LENGTH).fill(null);
+  items: any[] = [];
 
   initialized = false;
 
@@ -44,6 +44,7 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
   ngAfterViewChecked(): void {}
 
   ngOnInit() {
+    return;
     for (let i = 0; i < this.items.length; i++) {
       this.items[i] = i;
     }
