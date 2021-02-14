@@ -30,6 +30,8 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
   index: number;
   items: any[] = Array(ARRAY_LENGTH).fill(null);
 
+  @ViewChild("top") topRef: ElementRef;
+
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     @Inject(DOCUMENT) private document: any
@@ -43,6 +45,14 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
     for (let i = 0; i < this.items.length; i++) {
       this.items[i] = i;
     }
+    // listen for scroll to topRef
+    const top = this.document.querySelector("#top");
+
+    const handleIntersect = (entries, observer) => {
+      console.log(entries, observer);
+    };
+    let observer = new IntersectionObserver(handleIntersect, {});
+    observer.observe(top);
 
     let count = -1;
     this.scrollToBottom();
@@ -52,7 +62,7 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
 
       this.changeDetectorRef.detectChanges();
 
-      if (count < -10) {
+      if (count < -3) {
         clearInterval(handle);
 
         count = 1000;
