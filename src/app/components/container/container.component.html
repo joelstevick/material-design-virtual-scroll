@@ -3,8 +3,8 @@
 <cdk-virtual-scroll-viewport
   (scrolledIndexChange)="scrolledIndexChange($event)"
 >
-  x
   <div *cdkVirtualFor="let item of items; index as index" class="item">
+    <mat-spinner></mat-spinner>
     <span>{{item | json}}</span>
   </div>
   <div id="bottom"></div>
