@@ -53,7 +53,6 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
     const handleIntersect = (entries, observer) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
-          console.log("interesecting", e.isIntersecting);
           this.fetchMore();
         }
       });
@@ -66,15 +65,15 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
       this.scrollToBottom();
       this.changeDetectorRef.detectChanges();
       setTimeout(() => {
-        console.log("initialzed");
         this.initialized = true;
       });
     });
 
-    // this.testDynamicData();
+    this.testDynamicData();
   }
 
   fetchMore() {
+    return;
     if (!this.initialized) {
       return;
     }
@@ -108,12 +107,12 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
             this.scrollToBottom();
             this.changeDetectorRef.detectChanges();
           }
-        }, 1000);
+        }, 100);
       }
     }, 100);
   }
   scrollto(id) {
-    this.document.getElementById(id).scrollIntoView();
+    this.document.getElementById(id).scrollIntoView(id === "top");
   }
   scrollToTop() {
     this.scrollto("top");
