@@ -2,11 +2,11 @@ import {
   CdkVirtualScrollViewport,
   VirtualScrollStrategy
 } from "@angular/cdk/scrolling";
-import { Subject } from "rxjs";
+import { BehaviorSubject, Subject } from "rxjs";
 import { distinctUntilChanged } from "rxjs/operators";
 
 export class ChatScrollStrategy implements VirtualScrollStrategy {
-  private index$ = new Subject<number>();
+  private index$ = new BehaviorSubject<number>(null);
 
   scrolledIndexChange = this.index$.pipe(distinctUntilChanged());
 
@@ -39,10 +39,10 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
   }
   onDataLengthChanged(): void {
     console.log("chat-scroll.onDataLengthChanged");
-    this.viewport.setTotalContentSize(this.viewport.getViewportSize() + 20);
+    this.viewport.setTotalContentSize(this.viewport.getViewportSize() + 10);
     this.viewport.setRenderedRange({
-      start: 0,
-      end: this.viewport.getDataLength()
+      start: this.index$.getValue(),
+      end: this.index$.getValue() + 5
     });
   }
   onContentRendered(): void {
