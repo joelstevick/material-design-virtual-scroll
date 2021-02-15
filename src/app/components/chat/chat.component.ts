@@ -12,14 +12,17 @@ export class ChatComponent implements OnInit {
   fetchPrevious() {
     const PageSize = 5;
 
-    console.log("fetchPrevious");
+    console.log(
+      "fetchPrevious",
+      this.items,
+      -1 * (this.items.length + PageSize)
+    );
     return;
-    for (
-      let i = this.items.length;
-      i > -1 * (this.items.length + PageSize);
-      i--
-    ) {
-      this.items.push(i * -1);
+    const previousItems: any[] = Array(PageSize);
+    for (let i = 0; i < PageSize; i++) {
+      previousItems[i] = -1 * (this.items.length + i);
     }
+
+    this.items = [...previousItems, ...this.items];
   }
 }
