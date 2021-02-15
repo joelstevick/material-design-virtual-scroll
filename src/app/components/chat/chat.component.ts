@@ -12,6 +12,8 @@ export class ChatComponent implements OnInit {
   fetchPrevious() {
     const PageSize = 5;
 
+    console.log("fetchPrevious");
+    return;
     for (
       let i = this.items.length;
       i > -1 * (this.items.length + PageSize);
