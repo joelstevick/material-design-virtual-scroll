@@ -1,9 +1,8 @@
 <div id="wrapper">
 	<cdk-virtual-scroll-viewport (scrolledIndexChange)="scrolledIndexChange($event)">
-		<div id="top" #top></div>
 		<ng-container *cdkVirtualFor="let item of items; index as index">
 			<div class="item">
-				<span>{{item | json}}</span>
+				<span>{{item}}</span>
 			</div>
 		</ng-container>
 		<div id="bottom"></div>

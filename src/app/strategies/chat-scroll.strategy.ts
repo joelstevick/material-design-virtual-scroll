@@ -16,7 +16,7 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
   attach(viewport: CdkVirtualScrollViewport): void {
     this.viewport = viewport;
     this.viewport.setTotalContentSize(0);
-    this.viewport.setRenderedRange({ start: 0, end: 0 });
+    this.viewport.setRenderedRange({ start: 0, end: 1 });
     this.viewport.setRenderedContentOffset(0);
     console.log("chat-scroll.attach");
   }

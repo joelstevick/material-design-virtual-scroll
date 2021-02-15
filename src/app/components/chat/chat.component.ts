@@ -6,5 +6,6 @@ import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
   styleUrls: ["./chat.component.css"]
 })
 export class ChatComponent implements OnInit {
+  items: any[] = ["test"];
   ngOnInit(): void {}
 }

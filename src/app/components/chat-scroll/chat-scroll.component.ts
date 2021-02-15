@@ -31,6 +31,6 @@ export class ChatScrollComponent implements OnInit, AfterViewChecked {
   ngOnInit(): void {}
 
   scrolledIndexChange(index: number) {
-    
+    console.log(index);
   }
 }
