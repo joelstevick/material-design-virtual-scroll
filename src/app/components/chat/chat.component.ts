@@ -6,6 +6,18 @@ import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
   styleUrls: ["./chat.component.css"]
 })
 export class ChatComponent implements OnInit {
-  items: any[] = [1];
+  items: any[] = [];
   ngOnInit(): void {}
+
+  fetchPrevious() {
+    const PageSize = 5;
+
+    for (
+      let i = this.items.length;
+      i > -1 * (this.items.length + PageSize);
+      i--
+    ) {
+      this.items.push(i * -1);
+    }
+  }
 }

@@ -2,7 +2,7 @@ import {
   CdkVirtualScrollViewport,
   VirtualScrollStrategy
 } from "@angular/cdk/scrolling";
-import { Observable, Subject } from "rxjs";
+import { Subject } from "rxjs";
 import { distinctUntilChanged } from "rxjs/operators";
 
 export class ChatScrollStrategy implements VirtualScrollStrategy {
