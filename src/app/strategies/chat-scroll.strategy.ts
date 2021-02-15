@@ -5,11 +5,11 @@ import {
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Subject } from "rxjs";
 import { distinctUntilChanged } from "rxjs/operators";
-import { ChatScrollStrategyView } from "../components/chat-scroll/chat-scroll-strategy.view";
+import { ChatScrollStrategyViewMap } from "../components/chat-scroll/chat-scroll-strategy.view-map";
 
 @Injectable()
 export class ChatScrollStrategy implements VirtualScrollStrategy {
-  constructor(private view: ChatScrollStrategyView) {}
+  constructor(private viewMap: ChatScrollStrategyViewMap) {}
 
   private index$ = new BehaviorSubject<number>(null);
 
@@ -36,7 +36,7 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
       this.viewport.measureScrollOffset()
     );
     if (this.viewport.measureScrollOffset() === 0) {
-      console.log("fetch");
+      console.log("fetch", this.viewMap.getIndexHeight(0));
       this.index$.next(0);
     } else {
       this.index$.next(-1);
