@@ -31,8 +31,16 @@ export class ChatScrollComponent implements OnInit, AfterViewChecked {
   constructor(private viewMap: ChatScrollStrategyViewMap) {}
 
   ngAfterViewChecked(): void {}
-  ngOnInit(): void {}
-
+  ngOnInit(): void {
+    this.updateViewMap();
+  }
+  updateViewMap() {
+    this.viewMap.map = this.items.map(() => {
+      return {
+        height: 10
+      };
+    });
+  }
   scrolledIndexChange(index: number) {
     if (index === 0) {
       this.fetchPrevious.emit();
