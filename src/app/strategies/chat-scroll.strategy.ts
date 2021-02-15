@@ -26,13 +26,20 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
     console.log("chat-scroll.detach");
   }
   onContentScrolled(): void {
-    console.log("chat-scroll.onContentScrolled");
-    if (this.viewport.getOffsetToRenderedContentStart() === 0) {
+    console.log(
+      "chat-scroll.onContentScrolled",
+      this.viewport.measureScrollOffset()
+    );
+    if (this.viewport.measureScrollOffset() === 0) {
+      console.log("fetch");
       this.index$.next(0);
+    } else {
+      this.index$.next(-1);
     }
   }
   onDataLengthChanged(): void {
     console.log("chat-scroll.onDataLengthChanged");
+    this.viewport.setTotalContentSize(this.viewport.getViewportSize() + 20);
     this.viewport.setRenderedRange({
       start: 0,
       end: this.viewport.getDataLength()
