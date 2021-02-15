@@ -2,10 +2,15 @@ import {
   CdkVirtualScrollViewport,
   VirtualScrollStrategy
 } from "@angular/cdk/scrolling";
+import { Injectable } from "@angular/core";
 import { BehaviorSubject, Subject } from "rxjs";
 import { distinctUntilChanged } from "rxjs/operators";
+import { ChatScrollStrategyView } from "../components/chat-scroll/chat-scroll-strategy.view";
 
+@Injectable()
 export class ChatScrollStrategy implements VirtualScrollStrategy {
+  constructor(private view: ChatScrollStrategyView) {}
+
   private index$ = new BehaviorSubject<number>(null);
 
   scrolledIndexChange = this.index$.pipe(distinctUntilChanged());

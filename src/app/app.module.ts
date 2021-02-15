@@ -7,6 +7,7 @@ import { ContainerComponent } from "./components/container/container.component";
 import { ChatScrollComponent } from "./components/chat-scroll/chat-scroll.component";
 import { ChatComponent } from "./components/chat/chat.component";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { ChatScrollStrategyView } from "./components/chat-scroll/chat-scroll-strategy.view";
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
     ChatScrollComponent,
     ChatComponent
   ],
+  providers: [ChatScrollStrategyView],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
