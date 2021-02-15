@@ -9,6 +9,7 @@ import {
   Output
 } from "@angular/core";
 import { ChatScrollStrategy } from "../../strategies/chat-scroll.strategy";
+import { ChatScrollStrategyViewMap } from "./chat-scroll-strategy.view-map";
 
 @Component({
   selector: "chat-scroll",
@@ -26,6 +27,8 @@ export class ChatScrollComponent implements OnInit, AfterViewChecked {
   @Input() items: any[];
 
   @Output() fetchPrevious = new EventEmitter();
+
+  constructor(private viewMap: ChatScrollStrategyViewMap) {}
 
   ngAfterViewChecked(): void {}
   ngOnInit(): void {}
