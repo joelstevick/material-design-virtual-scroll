@@ -6,6 +6,7 @@ import { ScrollingModule } from "@angular/cdk/scrolling";
 import { ContainerComponent } from "./components/container/container.component";
 import { ChatScrollComponent } from "./components/chat-scroll/chat-scroll.component";
 import { ChatComponent } from "./components/chat/chat.component";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 @NgModule({
   imports: [

@@ -1,5 +1,5 @@
 <div id="wrapper">
-	<mat-spinner></mat-spinner>
+
 	<cdk-virtual-scroll-viewport (scrolledIndexChange)="scrolledIndexChange($event)">
 		<div id="top" #top></div>
 		<ng-container *cdkVirtualFor="let item of items; index as index">
