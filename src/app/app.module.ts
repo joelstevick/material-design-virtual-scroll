@@ -8,7 +8,12 @@ import { ChatScrollComponent } from "./components/chat-scroll/chat-scroll.compon
 import { ChatComponent } from "./components/chat/chat.component";
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, ScrollingModule],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    ScrollingModule,
+    MatProgressSpinnerModule
+  ],
   declarations: [
     AppComponent,
     ContainerComponent,

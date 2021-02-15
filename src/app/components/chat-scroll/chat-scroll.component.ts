@@ -3,7 +3,10 @@ import {
   AfterViewChecked,
   ChangeDetectionStrategy,
   Component,
-  OnInit
+  EventEmitter,
+  Input,
+  OnInit,
+  Output
 } from "@angular/core";
 import { ChatScrollStrategy } from "../../strategies/chat-scroll.strategy";
 
@@ -20,8 +23,14 @@ import { ChatScrollStrategy } from "../../strategies/chat-scroll.strategy";
   ]
 })
 export class ChatScrollComponent implements OnInit, AfterViewChecked {
-  items: any[] = [];
+  @Input() items: any[];
+
+  @Output() fetchPrevious = new EventEmitter();
 
   ngAfterViewChecked(): void {}
   ngOnInit(): void {}
+
+  scrolledIndexChange(index: number) {
+    
+  }
 }
