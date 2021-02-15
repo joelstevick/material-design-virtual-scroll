@@ -27,6 +27,9 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
   }
   onContentScrolled(): void {
     console.log("chat-scroll.onContentScrolled");
+    if (this.viewport.getOffsetToRenderedContentStart() === 0) {
+      this.index$.next(0);
+    }
   }
   onDataLengthChanged(): void {
     console.log("chat-scroll.onDataLengthChanged");
