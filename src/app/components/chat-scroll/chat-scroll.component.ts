@@ -45,6 +45,7 @@ export class ChatScrollComponent implements OnInit, AfterViewChecked {
         height: 10
       };
     });
+    console.log("update view map", this.viewMap.map);
   }
   scrolledIndexChange(index: number) {
     if (index === 0) {
