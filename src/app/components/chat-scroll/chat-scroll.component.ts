@@ -30,8 +30,12 @@ export class ChatScrollComponent implements OnInit, AfterViewChecked {
 
   constructor(private viewMap: ChatScrollStrategyViewMap) {}
 
-  ngAfterViewChecked(): void {}
+  ngAfterViewChecked(): void {
+    console.log("ngAfterViewChecked", this.items);
+    this.updateViewMap();
+  }
   ngOnInit(): void {
+    console.log("ngOnInit", this.items);
     this.updateViewMap();
   }
   updateViewMap() {

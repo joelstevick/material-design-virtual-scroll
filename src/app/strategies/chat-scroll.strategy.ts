@@ -36,7 +36,9 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
       this.viewport.measureScrollOffset()
     );
     if (this.viewport.measureScrollOffset() === 0) {
-      console.log("fetch", this.viewMap.getIndexHeight(0));
+      if (this.viewport.getDataLength() > 0) {
+        console.log("fetch", this.viewMap.getIndexHeight(0));
+      }
       this.index$.next(0);
     } else {
       this.index$.next(-1);
