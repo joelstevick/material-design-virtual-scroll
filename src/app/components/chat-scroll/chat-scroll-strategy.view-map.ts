@@ -16,7 +16,6 @@ export class ChatScrollStrategyViewMap {
   }
 
   set map(map: ChatScrollStrategyViewMapDesc[]) {
-    console.log("set map", map);
     this._map = map;
   }
 
