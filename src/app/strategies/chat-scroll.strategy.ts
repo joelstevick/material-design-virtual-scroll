@@ -44,7 +44,8 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
     console.log(
       "chat-scroll.onContentScrolled",
       this.viewport.measureScrollOffset(),
-      this.viewport.getRenderedRange()
+      this.viewport.getRenderedRange(),
+      this.viewport.getDataLength()
     );
   }
   onDataLengthChanged(): void {
@@ -69,6 +70,7 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
 
   // private logic
   getModelStartIndex() {
+    console.log("getModelStartIndex");
     let offset = this.viewport.measureScrollOffset();
     const { start } = this.viewport.getRenderedRange();
 
@@ -88,6 +90,7 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
   }
 
   getModelEndIndex(start: number): number {
+    console.log("getModelEndIndex", start, this.viewport.getDataLength());
     // check for eof
     if (start === this.viewport.getDataLength()) {
       return start;
