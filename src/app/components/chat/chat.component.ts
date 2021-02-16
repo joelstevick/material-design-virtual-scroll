@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import { ChatEntry } from "../chat-scroll/chat-scroll.component";
 
 @Component({
   selector: "chat",
@@ -6,18 +7,20 @@ import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
   styleUrls: ["./chat.component.css"]
 })
 export class ChatComponent implements OnInit {
-  items: any[] = [];
+  items: ChatEntry[] = [];
   ngOnInit(): void {}
 
   fetchPrevious() {
     const PageSize = 5;
 
-    const previousItems: any[] = Array(PageSize);
+    const previousItems: ChatEntry[] = Array(PageSize);
     for (let i = 0; i < PageSize; i++) {
-      previousItems[i] = -1 * (this.items.length + i);
+      previousItems[i] = {
+        html: `${-1 * (this.items.length + i)}`
+      };
     }
 
-    this.items = [...previousItems, ...this.items];
+    this.items = [...previousItems, ...this.items].reverse();
 
     console.log("fetchPrevious", this.items);
   }

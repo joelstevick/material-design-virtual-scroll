@@ -11,6 +11,9 @@ import {
 import { ChatScrollStrategy } from "../../strategies/chat-scroll.strategy";
 import { ChatScrollStrategyViewMap } from "./chat-scroll-strategy.view-map";
 
+export interface ChatEntry {
+  html: string;
+}
 @Component({
   selector: "chat-scroll",
   templateUrl: "./chat-scroll.component.html",
@@ -24,7 +27,7 @@ import { ChatScrollStrategyViewMap } from "./chat-scroll-strategy.view-map";
   ]
 })
 export class ChatScrollComponent implements OnInit, AfterViewChecked {
-  @Input() items: any[];
+  @Input() items: ChatEntry[];
 
   @Output() fetchPrevious = new EventEmitter();
 
