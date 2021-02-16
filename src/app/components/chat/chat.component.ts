@@ -22,7 +22,5 @@ export class ChatComponent implements OnInit {
     previousItems.reverse();
 
     this.items = [...previousItems, ...this.items];
-
-    console.log("fetchPrevious", this.items);
   }
 }
