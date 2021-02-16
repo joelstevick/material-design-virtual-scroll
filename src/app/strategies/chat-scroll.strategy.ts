@@ -33,6 +33,7 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
     console.log("chat-scroll.detach");
   }
   onContentScrolled(): void {
+    console.log("onContentScrolled");
     // calculate the new model-range
     this.viewport.setRenderedRange(this.getUpdatedModelRange());
 
@@ -42,18 +43,19 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
       this.index$.next(-1);
     }
     console.log(
-      "chat-scroll.onContentScrolled",
+      "chat-scroll.onContentScrolled - completed",
       this.viewport.measureScrollOffset(),
       this.viewport.getRenderedRange(),
       this.viewport.getDataLength()
     );
   }
   onDataLengthChanged(): void {
+    console.log("onDataLengthChanged");
     this.adjustForNewDataLength();
 
     this.viewport.setTotalContentSize(this.viewport.getViewportSize() + 10);
     console.log(
-      "chat-scroll.onDataLengthChanged",
+      "chat-scroll.onDataLengthChanged - completed",
       this.viewport.measureScrollOffset(),
       this.viewport.getRenderedRange()
     );
@@ -113,6 +115,7 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
   }
 
   getUpdatedModelRange() {
+    console.log("getUpdatedModelRange");
     return {
       start: this.getModelStartIndex(),
       end: this.getModelEndIndex(this.getModelStartIndex())
@@ -120,6 +123,7 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
   }
 
   adjustForNewDataLength() {
+    console.log("adjustForNewDataLength");
     // assume monotonically increases
     if (this.prevDataLength === 0) {
       this.viewport.setRenderedRange({
