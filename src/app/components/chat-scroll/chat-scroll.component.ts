@@ -5,8 +5,10 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
-  Output
+  Output,
+  SimpleChanges
 } from "@angular/core";
 import { ChatScrollStrategy } from "../../strategies/chat-scroll.strategy";
 import { ChatScrollStrategyViewMap } from "./chat-scroll-strategy.view-map";
@@ -26,21 +28,28 @@ export interface ChatEntry {
     }
   ]
 })
-export class ChatScrollComponent implements OnInit, AfterViewChecked {
+export class ChatScrollComponent
+  implements OnInit, AfterViewChecked, OnChanges {
   @Input() items: ChatEntry[];
 
   @Output() fetchPrevious = new EventEmitter();
 
   constructor(private viewMap: ChatScrollStrategyViewMap) {}
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log("ngOnChanges", changes);
 
-  ngAfterViewChecked(): void {
-    this.updateViewMap();
+    if (
+      changes.items.currentValue.length !== this.items.length &&
+      changes.items.currentValue.length > 0
+    ) {
+      this.updateViewMap(changes.items.currentValue);
+    }
   }
-  ngOnInit(): void {
-    this.updateViewMap();
-  }
-  updateViewMap() {
-    this.viewMap.map = this.items.map(() => {
+
+  ngAfterViewChecked(): void {}
+  ngOnInit(): void {}
+  updateViewMap(items: ChatEntry[]) {
+    this.viewMap.map = items.map(() => {
       return {
         height: 10
       };
