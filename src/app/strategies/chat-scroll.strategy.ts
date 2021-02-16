@@ -33,12 +33,13 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
   onContentScrolled(): void {
     console.log(
       "chat-scroll.onContentScrolled",
-      this.viewport.measureScrollOffset()
+      this.viewport.measureScrollOffset(),
+      this.viewport.getRenderedRange()
     );
+    // calculate the new model-range
+    this.viewport.setRenderedRange(this.getUpdatedModelRange());
+
     if (this.viewport.measureScrollOffset() === 0) {
-      if (this.viewport.getDataLength() > 0) {
-        console.log("fetch", this.viewMap.getIndexHeight(0));
-      }
       this.index$.next(0);
     } else {
       this.index$.next(-1);
@@ -60,5 +61,54 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
   }
   scrollToIndex(index: number, behavior: ScrollBehavior): void {
     console.log("chat-scroll.scrollToIndex");
+  }
+
+  // private logic
+  getModelStartIndex() {
+    let offset = this.viewport.measureScrollOffset();
+    const { start } = this.viewport.getRenderedRange();
+
+    let index = start;
+
+    while (offset > 0 && index < this.viewport.getDataLength()) {
+      const heightForIndex = this.viewMap.getIndexHeight(index);
+
+      offset -= heightForIndex;
+
+      if (offset > 0) {
+        index++;
+      }
+    }
+
+    return index;
+  }
+
+  getModelEndIndex(start: number): number {
+    // check for eof
+    if (start === this.viewport.getDataLength()) {
+      return start;
+    }
+    let offsetRemaining =
+      this.viewport.getViewportSize() - this.viewMap.getIndexHeight(start);
+    let index = start;
+
+    while (offsetRemaining > 0 && index < this.viewport.getDataLength()) {
+      const heightForIndex = this.viewMap.getIndexHeight(index);
+
+      offsetRemaining -= heightForIndex;
+
+      if (offsetRemaining > 0) {
+        index++;
+      }
+    }
+
+    return index;
+  }
+
+  getUpdatedModelRange() {
+    return {
+      start: this.getModelStartIndex(),
+      end: this.getModelEndIndex(this.getModelStartIndex())
+    };
   }
 }
