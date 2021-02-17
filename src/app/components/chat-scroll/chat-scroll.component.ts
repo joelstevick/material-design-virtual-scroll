@@ -39,6 +39,7 @@ export class ChatScrollComponent
     console.log("ngOnChanges", changes);
 
     if (
+      changes.items.previousValue &&
       changes.items.currentValue.length !== changes.items.previousValue.length
     ) {
       this.updateViewMap(changes.items.currentValue);
