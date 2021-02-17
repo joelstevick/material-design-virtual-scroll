@@ -117,14 +117,14 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
 
   getUpdatedModelRange() {
     const start = this.getModelStartIndex();
-    console.log("getUpdatedModelRange", {
-      start,
-      end: this.getModelEndIndex(start)
-    });
-    return {
+
+    const modelRange = {
       start,
       end: this.getModelEndIndex(start)
     };
+
+    console.log("getUpdatedModelRange", modelRange);
+    return modelRange;
   }
 
   adjustForNewDataLength() {
