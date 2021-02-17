@@ -33,7 +33,7 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
     console.log("chat-scroll.detach");
   }
   onContentScrolled(): void {
-    console.log("onContentScrolled");
+    console.log("onContentScrolled", this.viewport.measureScrollOffset());
     // calculate the new model-range
     this.viewport.setRenderedRange(this.getUpdatedModelRange());
 
