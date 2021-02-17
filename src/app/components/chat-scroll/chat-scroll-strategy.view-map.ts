@@ -21,10 +21,11 @@ export class ChatScrollStrategyViewMap {
   }
 
   getIndexHeight(index: number): number {
-    // console.log("getIndexHeight", index);
     if (index > this._map.length - 1) {
       throw new Error(`out of range: ${index}, ${this._map.length}`);
     }
+    console.log(`getIndexHeight(${index}) => ${this.map[index].height}`);
+
     return this.map[index].height;
   }
 }
