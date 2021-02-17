@@ -128,7 +128,6 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
   }
 
   adjustForNewDataLength() {
-    console.log("adjustForNewDataLength");
     // assume monotonically increases
     if (this.prevDataLength === 0) {
       this.viewport.setRenderedRange({
@@ -139,6 +138,8 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
       const delta = this.viewport.getDataLength() - this.prevDataLength;
 
       const { start, end } = this.viewport.getRenderedRange();
+
+      console.log("adjustForNewDataLength", delta, start, end);
 
       this.viewport.setRenderedRange({
         start: start + delta,
