@@ -36,12 +36,12 @@ export class ChatScrollComponent
 
   constructor(private viewMap: ChatScrollStrategyViewMap) {}
   ngOnChanges(changes: SimpleChanges): void {
-    console.log("ngOnChanges", changes);
-
     if (
       changes.items.previousValue &&
       changes.items.currentValue.length !== changes.items.previousValue.length
     ) {
+      console.log("ngOnChanges", changes);
+
       this.updateViewMap(changes.items.currentValue);
     }
   }
