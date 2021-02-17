@@ -17,7 +17,6 @@ export class ChatScrollStrategyViewMap {
 
   set map(map: ChatScrollStrategyViewMapDesc[]) {
     this._map = map;
-    console.log("update view map", this.map);
   }
 
   getIndexHeight(index: number): number {
