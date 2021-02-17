@@ -146,5 +146,6 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
         end: end + delta
       });
     }
+    this.prevDataLength = this.viewport.getDataLength();
   }
 }
