@@ -47,9 +47,13 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
     );
   }
   onDataLengthChanged(): void {
-    const adjustedRange = this.getAdjustedRange();
+    const { adjustedRange, delta } = this.getAdjustedRange();
 
-    // datalength changed implies that more data was fetched
+    if (delta) {
+      adjustedRange.start--;
+      adjustedRange.end--;
+    }
+    // data length changed implies that more data was fetched
     console.log("onDataLengthChanged", adjustedRange);
 
     this.viewport.setRenderedRange(adjustedRange);
@@ -131,14 +135,16 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
   getAdjustedRange() {
     // assume monotonically increases
     let adjustedRange: any;
+    let delta;
 
     if (this.prevDataLength === 0) {
       adjustedRange = {
         start: 0,
         end: this.getModelEndIndex(0)
       };
+      delta = 0;
     } else {
-      const delta = this.viewport.getDataLength() - this.prevDataLength;
+      delta = this.viewport.getDataLength() - this.prevDataLength;
 
       const { start, end } = this.viewport.getRenderedRange();
 
@@ -150,6 +156,6 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
     }
     this.prevDataLength = this.viewport.getDataLength();
 
-    return adjustedRange;
+    return { adjustedRange, delta };
   }
 }
