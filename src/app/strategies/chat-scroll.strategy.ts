@@ -34,6 +34,8 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
   }
   onContentScrolled(): void {
     const offset = this.viewport.measureScrollOffset();
+    console.log("onContentScrolled", offset);
+
     if (offset === 0) {
       this.index$.next(0);
     } else {
@@ -42,13 +44,6 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
       const delta = Math.trunc(offset / 10);
 
       const { start, end } = this.viewport.getRenderedRange();
-      console.log(
-        "onContentScrolled",
-        offset,
-        end,
-        delta,
-        this.viewport.getDataLength()
-      );
 
       if (end + delta <= this.viewport.getDataLength()) {
         this.viewport.setRenderedRange({
@@ -65,16 +60,21 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
     );
   }
   onDataLengthChanged(): void {
+    // data length changed implies that more data was fetched
+    console.log("onDataLengthChanged");
+
     const { adjustedRange, delta } = this.getAdjustedRange();
 
     if (delta) {
       adjustedRange.start--;
       adjustedRange.end--;
     }
-    // data length changed implies that more data was fetched
-    console.log("onDataLengthChanged", adjustedRange);
 
     this.viewport.setRenderedRange(adjustedRange);
+
+    if (delta) {
+      this.viewport.setRenderedContentOffset(10);
+    }
 
     this.viewport.setTotalContentSize(this.viewport.getViewportSize() + 10);
     console.log(
