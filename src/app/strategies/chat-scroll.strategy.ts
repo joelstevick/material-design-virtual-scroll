@@ -72,9 +72,7 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
 
     this.viewport.setRenderedRange(adjustedRange);
 
-    if (delta) {
-      this.viewport.scrollToOffset(10);
-    }
+    this.viewport.scrollToOffset(10);
 
     this.viewport.setTotalContentSize(this.viewport.getViewportSize() + 10);
     console.log(
