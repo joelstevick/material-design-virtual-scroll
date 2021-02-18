@@ -40,8 +40,6 @@ export class ChatScrollComponent
       changes.items.previousValue &&
       changes.items.currentValue.length !== changes.items.previousValue.length
     ) {
-      console.log("ngOnChanges", changes);
-
       this.updateViewMap(changes.items.currentValue);
     }
   }
@@ -54,7 +52,7 @@ export class ChatScrollComponent
         height: 10
       };
     });
-    console.log("update view map", this.viewMap.map);
+    console.log("update view map", this.viewMap.map.length);
   }
   scrolledIndexChange(index: number) {
     if (index === 0) {
