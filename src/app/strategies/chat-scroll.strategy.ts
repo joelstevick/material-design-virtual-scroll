@@ -1,3 +1,4 @@
+import { ListRange } from "@angular/cdk/collections";
 import {
   CdkVirtualScrollViewport,
   VirtualScrollStrategy
@@ -7,6 +8,13 @@ import { BehaviorSubject, Subject } from "rxjs";
 import { distinctUntilChanged } from "rxjs/operators";
 import { ChatScrollStrategyViewMap } from "../components/chat-scroll/chat-scroll-strategy.view-map";
 
+class State {
+  measureScrollOffset: number;
+  offsetToRenderedContentStart: number | null;
+  renderedRange: ListRange;
+  dataLength: number;
+  measureRenderedContentSize: number;
+}
 @Injectable()
 export class ChatScrollStrategy implements VirtualScrollStrategy {
   constructor(private viewMap: ChatScrollStrategyViewMap) {}
@@ -34,7 +42,7 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
   }
   onContentScrolled(): void {
     const offset = this.viewport.measureScrollOffset();
-    console.log("strategy.onContentScrolled", offset);
+    console.log("strategy.onContentScrolled", this.getState());
 
     if (offset === 0) {
       this.index$.next(0);
@@ -52,16 +60,10 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
         });
       }
     }
-    console.log(
-      "strategy.onContentScrolled - completed",
-      this.viewport.measureScrollOffset(),
-      this.viewport.getRenderedRange(),
-      this.viewport.getDataLength()
-    );
   }
   onDataLengthChanged(): void {
     // data length changed implies that more data was fetched
-    console.log("strategy.onDataLengthChanged");
+    console.log("strategy.onDataLengthChanged", this.getState());
 
     const { adjustedRange, delta } = this.getAdjustedRange();
 
@@ -75,22 +77,26 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
     this.viewport.scrollToOffset(10);
 
     this.viewport.setTotalContentSize(this.viewport.getViewportSize() + 10);
-    console.log(
-      "strategy.onDataLengthChanged - completed",
-      this.viewport.measureScrollOffset(),
-      this.viewport.getRenderedRange()
-    );
   }
   onContentRendered(): void {
-    console.log("strategy.onContentRendered");
+    console.log("strategy.onContentRendered", this.getState());
   }
   onRenderedOffsetChanged(): void {
-    console.log("strategy.onRenderedOffsetChanged");
+    console.log("strategy.onRenderedOffsetChanged", this.getState());
   }
   scrollToIndex(index: number, behavior: ScrollBehavior): void {
-    console.log("strategy.scrollToIndex");
+    console.log("strategy.scrollToIndex", this.getState());
   }
 
+  getState(): State {
+    return {
+      dataLength: this.viewport.getDataLength(),
+      offsetToRenderedContentStart: this.viewport.getOffsetToRenderedContentStart(),
+      renderedRange: this.viewport.getRenderedRange(),
+      measureRenderedContentSize: this.viewport.measureRenderedContentSize(),
+      measureScrollOffset: this.viewport.measureScrollOffset()
+    };
+  }
   // private logic
   getModelStartIndex() {
     let offset = this.viewport.measureScrollOffset();
