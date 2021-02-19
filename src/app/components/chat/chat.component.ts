@@ -23,6 +23,6 @@ export class ChatComponent implements OnInit {
 
     this.items = [...previousItems, ...this.items];
 
-    console.log("fetchPrevious", this.items.length);
+    console.log("chat.fetchPrevious", this.items.length);
   }
 }

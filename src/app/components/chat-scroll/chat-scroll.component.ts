@@ -52,7 +52,7 @@ export class ChatScrollComponent
         height: 10
       };
     });
-    console.log("update view map", this.viewMap.map.length);
+    console.log("chat-scroll.update view map", this.viewMap.map.length);
   }
   scrolledIndexChange(index: number) {
     if (index === 0) {
