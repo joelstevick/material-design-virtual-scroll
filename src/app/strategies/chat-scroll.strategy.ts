@@ -65,6 +65,7 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
     // data length changed implies that more data was fetched
     console.log("strategy.onDataLengthChanged", this.getState());
 
+    return;
     const { adjustedRange, delta } = this.getAdjustedRange();
 
     if (delta) {
