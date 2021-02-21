@@ -47,6 +47,7 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
     if (offset === 0) {
       this.index$.next(0);
     } else {
+      return;
       this.index$.next(-1);
 
       const delta = Math.trunc(offset / 10);
@@ -65,7 +66,6 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
     // data length changed implies that more data was fetched
     console.log("strategy.onDataLengthChanged", this.getState());
 
-    return;
     const { adjustedRange, delta } = this.getAdjustedRange();
 
     if (delta) {

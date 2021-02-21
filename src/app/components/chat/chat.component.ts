@@ -11,18 +11,16 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {}
 
   fetchPrevious() {
-    const PageSize = 5;
+    const PageSize = 500;
 
-    const previousItems: ChatEntry[] = Array(PageSize);
+    const previousItems: ChatEntry[] = [];
+
     for (let i = 0; i < PageSize; i++) {
-      previousItems[i] = {
+      previousItems.push({
         html: `${-1 * (this.items.length + i)}`
-      };
+      });
     }
-    previousItems.reverse();
-
     this.items = [...previousItems, ...this.items];
-
     console.log("chat.fetchPrevious", this.items.length);
   }
 }
