@@ -6,7 +6,7 @@ import {
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Subject } from "rxjs";
 import { distinctUntilChanged } from "rxjs/operators";
-import { ChatScrollStrategyViewMap } from "../components/chat-scroll/chat-scroll-strategy.view-map";
+import { ChatScrollStrategyViewMap, ChatScrollStrategyViewMapDesc } from "../components/chat-scroll/chat-scroll-strategy.view-map";
 
 class State {
   measureScrollOffset: number;
@@ -14,6 +14,7 @@ class State {
   renderedRange: ListRange;
   dataLength: number;
   measureRenderedContentSize: number;
+  viewMap: ChatScrollStrategyViewMapDesc[];
 }
 @Injectable()
 export class ChatScrollStrategy implements VirtualScrollStrategy {
@@ -106,7 +107,8 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
       offsetToRenderedContentStart: this.viewport.getOffsetToRenderedContentStart(),
       renderedRange: this.viewport.getRenderedRange(),
       measureRenderedContentSize: this.viewport.measureRenderedContentSize(),
-      measureScrollOffset: this.viewport.measureScrollOffset()
+      measureScrollOffset: this.viewport.measureScrollOffset(),
+      viewMap: this.viewMap.map
     };
   }
   // private logic

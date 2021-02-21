@@ -10,7 +10,8 @@ export class ChatScrollStrategyViewMap {
 
   get map() {
     if (!this._map) {
-      throw new Error("map not configured");
+      console.warn("map not configured");
+      return [];
     }
     return this._map;
   }
