@@ -6,7 +6,10 @@ import {
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Subject } from "rxjs";
 import { distinctUntilChanged } from "rxjs/operators";
-import { ChatScrollStrategyViewMap, ChatScrollStrategyViewMapDesc } from "../components/chat-scroll/chat-scroll-strategy.view-map";
+import {
+  ChatScrollStrategyViewMap,
+  ChatScrollStrategyViewMapDesc
+} from "../components/chat-scroll/chat-scroll-strategy.view-map";
 
 class State {
   measureScrollOffset: number;
@@ -25,8 +28,6 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
   scrolledIndexChange = this.index$.pipe(distinctUntilChanged());
 
   private viewport: CdkVirtualScrollViewport | null = null;
-
-  private prevDataLength = 0;
 
   private initialized = false;
 
@@ -76,20 +77,7 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
         start: this.viewport.getDataLength() - 5,
         end: this.viewport.getDataLength()
       });
-    } else {
-      return;
-      const { adjustedRange, delta } = this.getAdjustedRange();
-
-      if (delta) {
-        adjustedRange.start--;
-        adjustedRange.end--;
-      }
-
-      this.viewport.setRenderedRange(adjustedRange);
     }
-    this.viewport.scrollToOffset(10);
-
-    this.viewport.setTotalContentSize(1000);
   }
   onContentRendered(): void {
     console.log("strategy.onContentRendered", this.getState());
@@ -112,90 +100,19 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
     };
   }
   // private logic
-  getModelStartIndex() {
-    let offset = this.viewport.measureScrollOffset();
-    const { start } = this.viewport.getRenderedRange();
-
-    console.log("strategy.getModelStartIndex", start);
-
-    let index = start;
-
-    while (offset > 0 && index < this.viewport.getDataLength()) {
-      const heightForIndex = this.viewMap.getIndexHeight(index);
-
-      offset -= heightForIndex;
-
-      if (offset > 0) {
-        index++;
-      }
-    }
-
-    return index;
+  private updateRenderedRange(viewport: CdkVirtualScrollViewport) {
+    const {
+      dataLength,
+      offsetToRenderedContentStart,
+      renderedRange,
+      measureRenderedContentSize,
+      measureScrollOffset
+    } = this.getState();
   }
-
-  getModelEndIndex(start: number): number {
-    console.log(
-      "strategy.getModelEndIndex",
-      start,
-      this.viewport.getDataLength()
-    );
-    // check for eof
-    if (start === this.viewport.getDataLength()) {
-      return start;
-    }
-    let offsetRemaining =
-      this.viewport.getViewportSize() - this.viewMap.getIndexHeight(start);
-    let index = start;
-
-    while (offsetRemaining > 0 && index < this.viewport.getDataLength()) {
-      const heightForIndex = this.viewMap.getIndexHeight(index);
-
-      offsetRemaining -= heightForIndex;
-
-      if (offsetRemaining > 0) {
-        index++;
-      }
-    }
-
-    return index;
-  }
-
-  getUpdatedModelRange() {
-    const start = this.getModelStartIndex();
-
-    const modelRange = {
-      start,
-      end: this.getModelEndIndex(start)
-    };
-
-    console.log("getUpdatedModelRange", modelRange);
-    return modelRange;
-  }
-
-  getAdjustedRange() {
+  getAdjustedRangeForOffset() {
     // assume monotonically increases
-    let adjustedRange: any;
-    let delta;
+    let adjustedRange: ListRange;
 
-    if (this.prevDataLength === 0) {
-      adjustedRange = {
-        start: 0,
-        end: this.getModelEndIndex(0)
-      };
-      delta = 0;
-    } else {
-      delta = this.viewport.getDataLength() - this.prevDataLength;
-
-      const { start, end } = this.viewport.getRenderedRange();
-
-      adjustedRange = {
-        start: start + delta,
-        end: end + delta
-      };
-      console.log("getAdjustedRange", delta, start, end);
-    }
-    this.prevDataLength = this.viewport.getDataLength();
-
-    return { adjustedRange, delta };
+    return { adjustedRange };
   }
 }
