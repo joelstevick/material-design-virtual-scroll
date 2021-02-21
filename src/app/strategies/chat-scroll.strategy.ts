@@ -50,32 +50,28 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
 
     if (offset === 0) {
       this.index$.next(0);
-    } else {
-      return;
-      this.index$.next(-1);
-
-      const delta = Math.trunc(offset / 10);
-
-      const { start, end } = this.viewport.getRenderedRange();
-
-      if (end + delta <= this.viewport.getDataLength()) {
-        this.viewport.setRenderedRange({
-          start: start + delta,
-          end: end + delta
-        });
-      }
     }
+
+    this.updateRenderedRange();
   }
   onDataLengthChanged(): void {
+    const {
+      dataLength,
+      offsetToRenderedContentStart,
+      renderedRange,
+      measureRenderedContentSize,
+      measureScrollOffset
+    } = this.getState();
+
     // data length changed implies that more data was fetched
     console.log("strategy.onDataLengthChanged", this.getState());
 
+    this.viewport.setTotalContentSize(1000);
     if (!this.initialized) {
-      this.initialized = true;
-
+      console.log("should scroll to end");
       this.viewport.setRenderedRange({
-        start: this.viewport.getDataLength() - 5,
-        end: this.viewport.getDataLength()
+        start: dataLength - 10,
+        end: dataLength
       });
     }
   }
@@ -100,7 +96,7 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
     };
   }
   // private logic
-  private updateRenderedRange(viewport: CdkVirtualScrollViewport) {
+  private updateRenderedRange() {
     const {
       dataLength,
       offsetToRenderedContentStart,
