@@ -73,6 +73,11 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
         start: dataLength - 10,
         end: dataLength
       });
+
+      // need let the event loop run
+      setTimeout(() => {
+        this.viewport.scrollToOffset(1000);
+      });
     }
   }
   onContentRendered(): void {
