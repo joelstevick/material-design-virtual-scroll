@@ -27,6 +27,8 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
 
   private prevDataLength = 0;
 
+  private initialized = false;
+
   // lifecycle hooks
   attach(viewport: CdkVirtualScrollViewport): void {
     this.viewport = viewport;
@@ -66,15 +68,24 @@ export class ChatScrollStrategy implements VirtualScrollStrategy {
     // data length changed implies that more data was fetched
     console.log("strategy.onDataLengthChanged", this.getState());
 
-    const { adjustedRange, delta } = this.getAdjustedRange();
+    if (!this.initialized) {
+      this.initialized = true;
 
-    if (delta) {
-      adjustedRange.start--;
-      adjustedRange.end--;
+      this.viewport.setRenderedRange({
+        start: this.viewport.getDataLength() - 5,
+        end: this.viewport.getDataLength()
+      });
+    } else {
+      return;
+      const { adjustedRange, delta } = this.getAdjustedRange();
+
+      if (delta) {
+        adjustedRange.start--;
+        adjustedRange.end--;
+      }
+
+      this.viewport.setRenderedRange(adjustedRange);
     }
-
-    this.viewport.setRenderedRange(adjustedRange);
-
     this.viewport.scrollToOffset(10);
 
     this.viewport.setTotalContentSize(this.viewport.getViewportSize() + 10);
